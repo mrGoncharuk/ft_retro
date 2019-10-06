@@ -1,7 +1,7 @@
 #include "Game.hpp"
 
 
-Game::Game(): flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false)
+Game::Game(): player('T', 3, 3), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false)
 {
 	initscr();
 	nodelay(stdscr,true);                   //if there wasn't any key pressed don't wait for keypress
@@ -9,7 +9,7 @@ Game::Game(): flagRunning(true), flagShoot(false), flagLeft(false), flagRight(fa
 	noecho();                                                                       //don't write
 	curs_set(0);                                                    //cursor invisible
 	getmaxyx(stdscr,fieldHeight,fieldWidth);
-	Player('T', 3, 3);
+	
 }
 
 void	Game::events()

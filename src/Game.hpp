@@ -30,4 +30,3 @@ public:
 	void	mv_down(Symbol &p_symb);
 
 };
-
