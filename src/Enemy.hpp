@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENEMY_HPP
+# define ENEMY_HPP
 
 #include "Symbol.hpp"
 #include <stdlib.h>
@@ -7,12 +8,13 @@
 class Enemy: public Symbol
 {
 private:
-    void putEnemy(int maxWidth);
-	/* data */
+    int getRandPosition(int maxWidth);
 public:
-	Enemy(/* args */);
-	Enemy(char view, int maxWidth);
+	Enemy();
+	Enemy(char view, int maxWidth, int speed);
 	~Enemy();
     Enemy(const Enemy & src);
     Enemy & operator=( Enemy const & rhs);
 };
+
+#endif

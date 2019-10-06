@@ -59,7 +59,8 @@ void	Game::update()
 				bullets[i] = NULL;
 			}
 			else
-				bullets[i]->fly();
+				if (bullets[i]->isReadyForUpdate())
+					bullets[i]->fly();
 		}
 }
 

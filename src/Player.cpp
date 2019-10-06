@@ -14,17 +14,33 @@ Player::Player(char p_symb, int p_x, int p_y): Symbol(p_symb, p_x, p_y), hp(3)
 
 Player::~Player()
 {
+	for (int i = 0; i < Player::max_bullets; i++)
+		if (bullets[i] != NULL)
+			delete bullets[i];
 }
 
-Bullet	**Player::getBullets()
+Player & Player::operator=(Player const & rhs)
 {
-	return (bullets);
+	setView(rhs.getView());
+    setXpos(rhs.getXpos());
+    setYpos(rhs.getYpos());
+	this->hp = rhs.hp;
+	for (int i = 0; i < Player::max_bullets; i++)
+		if (rhs.bullets[i] != NULL)
+			bullets[i] = new Bullet(*(rhs.bullets[i]));
+		else
+			bullets[i] = NULL;
+	return (*this);
 }
 
-int		Player::getMaxBullets()
+Player::Player(const Player & src)
 {
-	return (Player::max_bullets);
+	*this = src;
 }
+
+
+Bullet	**Player::getBullets() { return (bullets); }
+int		Player::getMaxBullets() { return (Player::max_bullets); }
 
 void	Player::send_bullet()
 {
@@ -32,7 +48,7 @@ void	Player::send_bullet()
 	{
 		if (bullets[i] == NULL)
 		{
-			bullets[i] = new Bullet(this->x, this->y - 1);
+			bullets[i] = new Bullet('|', this->x, this->y - 1, -1, 100);
 			break ;
 		}
 	}

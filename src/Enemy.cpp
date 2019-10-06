@@ -5,10 +5,7 @@ Enemy::Enemy() {
 }
 
 
-Enemy::Enemy(char view, int maxWidth) {
-    setView(view);
-    setYpos(2);
-    putEnemy(maxWidth);
+Enemy::Enemy(char view, int maxWidth, int speed): Symbol(view, 5, 1, speed)  {
 }
 
 Enemy::~Enemy()
@@ -21,14 +18,15 @@ Enemy::Enemy(const Enemy & src) {
 }
 
 Enemy &Enemy::operator=( Enemy const & rhs) {
-    setView(rhs.getView());
-    setXpos(rhs.getXpos());
-    setYpos(rhs.getYpos());
-
+    this->view = rhs.getView();
+    this->x = rhs.getXpos();
+    this->y = rhs.getYpos();
+    this->speed = speed;
 	return *this;
 }
 
-void Enemy::putEnemy(int maxWidth) {
+int     Enemy::getRandPosition(int maxWidth)
+{
     int tmpx;
     
     while (true) {
@@ -38,6 +36,6 @@ void Enemy::putEnemy(int maxWidth) {
         else
             break;
     }
-    x = tmpx;
+    return (tmpx);
 }
 
