@@ -1,7 +1,7 @@
 #include "Game.hpp"
+#include <ctime>
 
-
-Game::Game(): player('T', 3, 3), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false)
+Game::Game(): player('T', 15, 15), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false)
 {
 	initscr();
 	nodelay(stdscr,true);                   //if there wasn't any key pressed don't wait for keypress
@@ -9,7 +9,6 @@ Game::Game(): player('T', 3, 3), flagRunning(true), flagShoot(false), flagLeft(f
 	noecho();                                                                       //don't write
 	curs_set(0);                                                    //cursor invisible
 	getmaxyx(stdscr,fieldHeight, fieldWidth);
-
 }
 
 void	Game::events()
@@ -37,27 +36,39 @@ void	Game::update()
 	if (flagLeft)
 	{
 		flagLeft = false;
-		mv_left(player);
-
-		
+		mv_left(player);		
 	}
 	if (flagRight)
 	{
 		flagRight = false;
 		mv_right(player);
 	}
+	if (flagShoot)
+	{
+		flagShoot = false;
+		player.send_bullet();
+	}
+	
+	Bullet **bullets = player.getBullets();
+	for (int i = 0; i < player.getMaxBullets(); i++)
+		if (bullets[i])
+		{
+			if (bullets[i]->getYpos() == 0)
+			{
+				delete bullets[i];
+				bullets[i] = NULL;
+			}
+			else
+				bullets[i]->fly();
+		}
 }
 
 void	Game::render()
 {
 	erase();
 	player.show_symb();
+	player.show_bullets();
 	refresh();
-	// refresh();
-	// erase();
-	// move(0, 0);
-	// addch('T');
-	
 }
 
 void	Game::mainloop()

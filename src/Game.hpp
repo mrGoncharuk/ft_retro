@@ -3,6 +3,7 @@
 #include <curses.h>
 #include "Symbol.hpp"
 #include "Player.hpp"
+#include "Bullet.hpp"
 #define ESC_KEY 27
 #define SPACE_KEY 32
 class Game

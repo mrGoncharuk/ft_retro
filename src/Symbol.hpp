@@ -1,6 +1,7 @@
 #pragma once
 
 #include <curses.h>
+unsigned long long	get_curr_time( void );
 
 class Symbol
 {

@@ -6,7 +6,7 @@
 #    By: mhonchar <mhonchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/05 13:02:55 by htkachuk          #+#    #+#              #
-#    Updated: 2019/10/06 14:54:08 by mhonchar         ###   ########.fr        #
+#    Updated: 2019/10/06 16:33:52 by mhonchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ INC_DIR = src/
 SRC_FILES =		main.cpp \
 				Player.cpp \
 				Game.cpp \
-				Symbol.cpp
+				Symbol.cpp \
+				Bullet.cpp
 
 # HEADERS = 		$(INC_DIR)ClassPlayer.hpp
 
