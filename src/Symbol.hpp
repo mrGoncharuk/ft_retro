@@ -21,8 +21,10 @@ public:
 	int		getYpos(void) const;
 	void	setXpos(int p_x);
 	void	setYpos(int p_y);
+	void	setView(char newView);
 	void	updXpos(int p_x);
 	void	updYpos(int p_y);
+	char	getView(void) const;	
 
 };
 

@@ -26,6 +26,10 @@ void	Symbol::updYpos(int p_y)
 	y += p_y;
 }
 
+void 	Symbol::setView(char newView) {
+	view = newView;
+}
+
 void	Symbol::show_symb()
 {
 	move(y, x);
@@ -38,5 +42,6 @@ void	Symbol::show_symb()
 
 int		Symbol::getXpos(void) const { return (x); }
 int		Symbol::getYpos(void) const { return (y); }
+char	Symbol::getView(void) const { return (view ); }
 void	Symbol::setXpos(int p_x) { x = p_x; }
 void	Symbol::setYpos(int p_y) { y = p_y; }
