@@ -1,14 +1,14 @@
 #include "Game.hpp"
 #include <ctime>
 
-Game::Game(): player('T', 15, 15), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false)
+Game::Game(): player('T', 40, 27), fieldHeight(30), fieldWidth(80), enemies(1, 77, 1500), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false), flagEndStatus(true)
 {
 	initscr();
 	nodelay(stdscr,true);                   //if there wasn't any key pressed don't wait for keypress
 	keypad(stdscr,true);                    //init the keyboard
 	noecho();                                                                       //don't write
 	curs_set(0);                                                    //cursor invisible
-	getmaxyx(stdscr,fieldHeight, fieldWidth);
+	resizeterm(fieldHeight - 1, fieldWidth - 1);
 }
 
 void	Game::events()
@@ -48,7 +48,8 @@ void	Game::update()
 		flagShoot = false;
 		player.send_bullet();
 	}
-	
+	enemies.spawnMob();
+	enemies.moveSwarm();
 	Bullet **bullets = player.getBullets();
 	for (int i = 0; i < player.getMaxBullets(); i++)
 		if (bullets[i])
@@ -62,6 +63,22 @@ void	Game::update()
 				if (bullets[i]->isReadyForUpdate())
 					bullets[i]->fly();
 		}
+	enemies.isMobDied(bullets, player.getMaxBullets());
+	if (enemies.isPlayerKilled(player.getXpos(), player.getYpos()))
+	{
+		flagEndStatus = false;
+		flagRunning = false;
+	}
+	if (enemies.isSwarmLost())
+	{
+		flagEndStatus = true;
+		flagRunning = false;
+	}
+	if (enemies.isSwarmWin(fieldHeight))
+	{
+		flagRunning = false;
+		flagEndStatus = false;
+	}
 }
 
 void	Game::render()
@@ -69,8 +86,11 @@ void	Game::render()
 	erase();
 	player.show_symb();
 	player.show_bullets();
+	enemies.drawSwarm();
+	box(stdscr, 0, 0);
 	refresh();
 }
+
 
 void	Game::mainloop()
 {
@@ -80,6 +100,17 @@ void	Game::mainloop()
 		update();
 		render();
 	}
+	if (flagEndStatus == true)
+	{
+		move(fieldHeight / 2 - 4, fieldWidth / 2);
+		printw("You win!!!");
+	}
+	else
+	{
+		move(fieldHeight / 2 - 4, fieldWidth / 2);
+		printw("You lose!!!");
+	}
+	getch();
 }
 
 Game::~Game()
@@ -90,24 +121,24 @@ Game::~Game()
 
 void	Game::mv_left(Symbol &p_symb)
 {
-	if (p_symb.getXpos() > 0)
+	if (p_symb.getXpos() > 1)
 		p_symb.updXpos(-1);
 }
 
 void	Game::mv_right(Symbol &p_symb)
 {
-	if (p_symb.getXpos() < fieldWidth)
+	if (p_symb.getXpos() < (fieldWidth - 3))
 		p_symb.updXpos(1);
 }
 
 void	Game::mv_down(Symbol &p_symb)
 {
-	if (p_symb.getYpos() > fieldHeight)
+	if (p_symb.getYpos() < (fieldHeight - 1))
 		p_symb.updYpos(1);
 }
 
 void	Game::mv_up(Symbol &p_symb)
 {
-	if (p_symb.getYpos() > 0)
+	if (p_symb.getYpos() > 1)
 		p_symb.updYpos(-1);
 }

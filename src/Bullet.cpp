@@ -3,11 +3,6 @@
 Bullet::Bullet(): Symbol('|', 0, 0, 1000), direction(-1)
 {
 }
-
-Bullet::~Bullet()
-{
-}
-
 Bullet::Bullet(const Bullet & src) {
     *this = src;
     return ;
@@ -33,6 +28,9 @@ Bullet::Bullet(int p_x, int p_y): Symbol('|', p_x, p_y, 1000), direction(-1)
 {
 }
 
+Bullet::~Bullet()
+{
+}
 
 void	Bullet::fly()
 {

@@ -62,6 +62,12 @@ bool	Symbol::isReadyForUpdate()
 	return (false);
 }
 
+bool Symbol::operator== (Symbol &rhs)
+{
+	if (this->x == rhs.getXpos() && this->y == rhs.getYpos())
+		return (true);
+	return (false);
+}
 
 
 int		Symbol::getXpos(void) const { return (x); }

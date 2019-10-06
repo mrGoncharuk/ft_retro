@@ -6,7 +6,7 @@
 #    By: mhonchar <mhonchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/05 13:02:55 by htkachuk          #+#    #+#              #
-#    Updated: 2019/10/06 18:47:55 by mhonchar         ###   ########.fr        #
+#    Updated: 2019/10/06 19:53:21 by mhonchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC_FILES =		main.cpp \
 				Game.cpp \
 				Symbol.cpp \
 				Bullet.cpp \
-				Enemy.cpp
+				Enemy.cpp \
+				Swarm.cpp
 
 # HEADERS = 		$(INC_DIR)ClassPlayer.hpp
 
@@ -33,7 +34,7 @@ INC = 	-I $(INC_DIR)
 
 # Define all the compiling flags.
 CXX      := clang++
-CXXFLAGS := 
+CXXFLAGS := -fsanitize=address
 LIB = -lncurses
 
 C_RED = \033[31m

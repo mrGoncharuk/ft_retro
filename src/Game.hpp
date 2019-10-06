@@ -1,20 +1,23 @@
 #ifndef GAME_HPP
 # define GAME_HPP
 
-#include <curses.h>
-#include "Symbol.hpp"
-#include "Player.hpp"
-#include "Bullet.hpp"
-#include "Enemy.hpp"
-#define ESC_KEY 27
-#define SPACE_KEY 32
+# include <curses.h>
+# include "Symbol.hpp"
+# include "Player.hpp"
+# include "Bullet.hpp"
+# include "Enemy.hpp"
+# include "Swarm.hpp"
+# define ESC_KEY 27
+# define SPACE_KEY 32
 class Game
 {
 private:
 	Player	player;
+	Swarm	enemies;
 	int		fieldWidth;
 	int		fieldHeight;
 	bool	flagRunning;
+	bool	flagEndStatus;
 	bool	flagLeft;
 	bool	flagRight;
 	bool	flagShoot;

@@ -1,11 +1,11 @@
 #include "Enemy.hpp"
 
-Enemy::Enemy() {
+Enemy::Enemy():Symbol('E', 0, 0, 1000) {
 
 }
 
 
-Enemy::Enemy(char view, int maxWidth, int speed): Symbol(view, 5, 1, speed)  {
+Enemy::Enemy(char view, int maxWidth, int speed): Symbol(view, getRandPosition(maxWidth), 1, speed)  {
 }
 
 Enemy::~Enemy()

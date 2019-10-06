@@ -20,6 +20,7 @@ public:
 	~Symbol();
 	Symbol(const Symbol & src);
 	Symbol & operator=(Symbol const & rhs);
+	bool operator== (Symbol &rhs);
 	void	show_symb();
 	bool	isReadyForUpdate();
 	int		getXpos(void) const;

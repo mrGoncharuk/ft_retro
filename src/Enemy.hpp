@@ -8,13 +8,13 @@
 class Enemy: public Symbol
 {
 private:
-    int getRandPosition(int maxWidth);
+	int getRandPosition(int maxWidth);
 public:
 	Enemy();
 	Enemy(char view, int maxWidth, int speed);
 	~Enemy();
-    Enemy(const Enemy & src);
-    Enemy & operator=( Enemy const & rhs);
+	Enemy(const Enemy & src);
+	Enemy & operator=( Enemy const & rhs);
 };
 
 #endif
