@@ -7,6 +7,7 @@
 # include "Bullet.hpp"
 # include "Enemy.hpp"
 # include "Swarm.hpp"
+# include "Stat.hpp"
 # define ESC_KEY 27
 # define SPACE_KEY 32
 
@@ -15,6 +16,7 @@ class Game
 private:
 	Player	player;
 	Swarm	enemies;
+	Stat    stat;
 	int		fieldWidth;
 	int		fieldHeight;
 	int		screenHeight;

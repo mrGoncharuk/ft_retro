@@ -66,13 +66,16 @@ void	Game::update()
 	enemies.isMobDied(bullets, player.getMaxBullets());
 	if (enemies.isPlayerKilled(player.getXpos(), player.getYpos(), screenHeight))
 	{
-		flagEndStatus = false;
-		flagRunning = false;
+		if (stat.getHP() == 0) {
+			flagRunning = false;
+			flagEndStatus = false;
+		}
+		else 
+			stat.loseHP();
 	}
 	if (enemies.isSwarmLost())
 	{
-		flagEndStatus = true;
-		flagRunning = false;
+		stat.lvlUpgrade();
 	}
 }
 
@@ -85,11 +88,9 @@ void	Game::render()
 	player.show_bullets();
 	enemies.drawSwarm();
 	box(stdscr, 0, 0);
-	for (int i = 1; i < fieldWidth - 2; i++)
-	{
-		move(fieldHeight - 10, i);
-		addch('#');
-	}
+
+	stat.printInfo(fieldWidth, fieldHeight);
+
 	refresh();
 }
 

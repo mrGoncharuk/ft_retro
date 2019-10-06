@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mhonchar <mhonchar@student.42.fr>          +#+  +:+       +#+         #
+#    By: htkachuk <htkachuk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/05 13:02:55 by htkachuk          #+#    #+#              #
-#    Updated: 2019/10/06 19:53:21 by mhonchar         ###   ########.fr        #
+#    Updated: 2019/10/06 21:53:55 by htkachuk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC_FILES =		main.cpp \
 				Symbol.cpp \
 				Bullet.cpp \
 				Enemy.cpp \
-				Swarm.cpp
+				Swarm.cpp \
+				Stat.cpp
 
 # HEADERS = 		$(INC_DIR)ClassPlayer.hpp
 
