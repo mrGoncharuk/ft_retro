@@ -10,12 +10,14 @@ private:
 	int		died;
 	int		spawnedAmount;
 	int		spawnSpeed;
+	int		mobSpeed;
 	Enemy	**arr;
+	Bullet	*bullet;
 	
 	unsigned long long		lastUpdateTime;
 public:
 	Swarm();
-	Swarm(int p_size, int p_fieldWidth, int p_spawnSpeed);
+	Swarm(int p_size, int p_fieldWidth, int p_spawnSpeed, int p_mobSpeed);
 	~Swarm();
 	Swarm(Swarm const &cpy);
 	Swarm	&operator=(Swarm const &);
@@ -23,10 +25,10 @@ public:
 	void	spawnMob();
 	void	moveSwarm();
 	void	isMobDied(Bullet **bullets, int bulletsAmount);
-	bool	isSwarmWin(int fieldHeight);
-	bool	isPlayerKilled(int playerX, int playerY);
+	bool	isPlayerKilled(int playerX, int playerY, int fieldHeight);
 	bool	isSwarmLost();
 	void	drawSwarm();
+	void	moveMobBullet();
 };
 
 #endif

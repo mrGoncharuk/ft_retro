@@ -1,9 +1,12 @@
 #ifndef ENEMY_HPP
 # define ENEMY_HPP
 
-#include "Symbol.hpp"
+
 #include <stdlib.h>
 #include <ctime>
+
+#include "Symbol.hpp"
+#include "Bullet.hpp"
 
 class Enemy: public Symbol
 {

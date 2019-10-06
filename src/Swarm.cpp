@@ -1,10 +1,10 @@
 #include "Swarm.hpp"
 
-Swarm::Swarm(/* args */): size(0), arr(NULL), spawnSpeed(2000), lastUpdateTime(get_curr_time()), spawnedAmount(0), died(0)
+Swarm::Swarm(/* args */): size(0), arr(NULL), spawnSpeed(2000), lastUpdateTime(get_curr_time()), spawnedAmount(0), died(0), mobSpeed(0), bullet(NULL)
 {
 }
 
-Swarm::Swarm(int p_size, int p_fieldWidth, int p_spawnSpeed):size(p_size), spawnSpeed(p_spawnSpeed), spawnedAmount(0), died(0)
+Swarm::Swarm(int p_size, int p_fieldWidth, int p_spawnSpeed, int p_mobSpeed):size(p_size), spawnSpeed(p_spawnSpeed), mobSpeed(p_mobSpeed), spawnedAmount(0), died(0), bullet(NULL)
 {
 	if (size < 1)
 		arr = NULL;
@@ -12,9 +12,8 @@ Swarm::Swarm(int p_size, int p_fieldWidth, int p_spawnSpeed):size(p_size), spawn
 	{
 		arr = new Enemy *[size];
 		for (int i = 0; i < size; i++)
-			arr[i] = new Enemy('E', p_fieldWidth, 300);
+			arr[i] = new Enemy('E', p_fieldWidth, mobSpeed);
 	}
-	
 }
 
 Swarm::~Swarm()
@@ -23,6 +22,8 @@ Swarm::~Swarm()
 		if (arr[i] != NULL)
 			delete arr[i];
 	delete [] arr;
+	if (bullet)
+		delete bullet;
 }
 
 
@@ -32,12 +33,20 @@ void	Swarm::spawnMob()
 	{
 		spawnedAmount++;
 		lastUpdateTime = get_curr_time();
+		if (spawnedAmount % 5 == 4)
+		{
+			if (bullet == NULL)
+				bullet = new Bullet('V', arr[spawnedAmount - 1]->getXpos(), arr[spawnedAmount - 1]->getYpos() + 1, 1, 150);
+		}
 	}
 }
 
 
 void	Swarm::moveSwarm()
 {
+	if (bullet)
+		if (bullet->isReadyForUpdate())
+			bullet->fly();
 	for (int i = 0; i < spawnedAmount; i++)
 	{
 		if (arr[i] != NULL)
@@ -51,7 +60,11 @@ void	Swarm::drawSwarm()
 {
 	for (int i = 0; i < spawnedAmount; i++)
 		if (arr[i] != NULL)
+		{
 			arr[i]->show_symb();
+		}
+	if (bullet != NULL)
+		bullet->show_symb();
 }
 
 void	Swarm::isMobDied(Bullet **bullets, int bulletsAmount)
@@ -77,31 +90,45 @@ void	Swarm::isMobDied(Bullet **bullets, int bulletsAmount)
 	}
 }
 
-
-bool	Swarm::isSwarmWin(int fieldHeight)
+bool	Swarm::isPlayerKilled(int playerX, int playerY, int fieldHeight)
 {
-	for (int i = 0; i < size; i++)
+	int		i = 0;
+
+
+	if (bullet != NULL)
+	{
+		if (((bullet->getYpos()) >= playerY) && ((playerX - 2) >= bullet->getXpos() || (playerX - 2) <= bullet->getXpos()))
+			return (true);
+		if (bullet->getYpos() == fieldHeight)
+		{
+			delete bullet;
+			bullet = NULL;
+		}
+	}
+	while (i < size)
+	{
+		if (arr[i] != NULL)
+		{
+			if ((playerY - arr[i]->getYpos()) <= 0 && ((playerX - 2) >= arr[i]->getXpos() && (playerX - 2) < arr[i]->getXpos()))
+			{
+				return (true);
+			}
+			else
+			{
+				break ;
+			}
+		}
+		i++;
+	}
+	while (i < size)
+	{
 		if (arr[i] != NULL)
 		{
 			if (arr[i]->getYpos() == (fieldHeight - 2))
 				return (true);
-			else
-				break ;
 		}
-	return (false);
-}
-
-
-bool	Swarm::isPlayerKilled(int playerX, int playerY)
-{
-	for (int i = 0; i < size; i++)
-		if (arr[i] != NULL)
-		{
-			if ((arr[i]->getYpos() == playerY) && (arr[i]->getXpos() == playerX))
-				return (true);
-			else
-				break ;
-		}
+		i++;
+	}
 	return (false);
 }
 

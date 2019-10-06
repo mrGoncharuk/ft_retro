@@ -20,11 +20,11 @@ Bullet::Bullet(char p_view, int p_x, int p_y, int p_dir, int p_speed): Symbol(p_
 {
 }
 
-Bullet::Bullet(int p_x, int p_y, int p_dir): Symbol('|', p_x, p_y, 1000), direction(p_dir)
+Bullet::Bullet(int p_x, int p_y, int p_dir): Symbol('|', p_x, p_y, 500), direction(p_dir)
 {
 }
 
-Bullet::Bullet(int p_x, int p_y): Symbol('|', p_x, p_y, 1000), direction(-1)
+Bullet::Bullet(int p_x, int p_y): Symbol('|', p_x, p_y, 500), direction(-1)
 {
 }
 

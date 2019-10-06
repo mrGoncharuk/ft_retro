@@ -38,6 +38,13 @@ Player::Player(const Player & src)
 	*this = src;
 }
 
+void	Player::show_player()
+{
+	move(y, x - 2);
+	printw("_/|\\_");
+	move(y + 1, x - 2);
+	printw(":===:");
+}
 
 Bullet	**Player::getBullets() { return (bullets); }
 int		Player::getMaxBullets() { return (Player::max_bullets); }

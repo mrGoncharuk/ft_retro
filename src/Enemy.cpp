@@ -5,7 +5,7 @@ Enemy::Enemy():Symbol('E', 0, 0, 1000) {
 }
 
 
-Enemy::Enemy(char view, int maxWidth, int speed): Symbol(view, getRandPosition(maxWidth), 1, speed)  {
+Enemy::Enemy(char view, int maxWidth, int speed): Symbol(view, getRandPosition(maxWidth), 1, speed){
 }
 
 Enemy::~Enemy()
@@ -30,12 +30,11 @@ int     Enemy::getRandPosition(int maxWidth)
     int tmpx;
     
     while (true) {
-        tmpx = (rand() % maxWidth) + 1;
-        if (tmpx >= maxWidth - 2)
+        tmpx = (rand() % maxWidth) + 4;
+        if (tmpx >= maxWidth - 6)
             continue;
         else
             break;
     }
     return (tmpx);
 }
-

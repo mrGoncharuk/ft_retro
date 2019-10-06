@@ -20,6 +20,7 @@ public:
 	Bullet	**getBullets();
 	int		getMaxBullets();
 	void	show_bullets();
+	void	show_player();
 };
 
 #endif
