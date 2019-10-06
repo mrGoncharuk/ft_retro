@@ -83,7 +83,7 @@ bool	Swarm::isSwarmWin(int fieldHeight)
 	for (int i = 0; i < size; i++)
 		if (arr[i] != NULL)
 		{
-			if (arr[i]->getYpos() == (fieldHeight - 1))
+			if (arr[i]->getYpos() == (fieldHeight - 2))
 				return (true);
 			else
 				break ;
@@ -111,5 +111,3 @@ bool	Swarm::isSwarmLost()
 		return (true);
 	return (false);
 }
-
-

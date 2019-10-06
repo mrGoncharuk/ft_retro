@@ -1,7 +1,6 @@
 #include "Game.hpp"
-#include <ctime>
 
-Game::Game(): player('T', 40, 27), fieldHeight(30), fieldWidth(80), enemies(1, 77, 1500), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false), flagEndStatus(true)
+Game::Game(): player('T', 40, 27), fieldHeight(40), fieldWidth(80), enemies(1, 77, 1500), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false), flagEndStatus(true)
 {
 	initscr();
 	nodelay(stdscr,true);                   //if there wasn't any key pressed don't wait for keypress
@@ -9,6 +8,7 @@ Game::Game(): player('T', 40, 27), fieldHeight(30), fieldWidth(80), enemies(1, 7
 	noecho();                                                                       //don't write
 	curs_set(0);                                                    //cursor invisible
 	resizeterm(fieldHeight - 1, fieldWidth - 1);
+	screenHeight = fieldHeight - 10;
 }
 
 void	Game::events()
@@ -74,7 +74,7 @@ void	Game::update()
 		flagEndStatus = true;
 		flagRunning = false;
 	}
-	if (enemies.isSwarmWin(fieldHeight))
+	if (enemies.isSwarmWin(screenHeight))
 	{
 		flagRunning = false;
 		flagEndStatus = false;
@@ -88,6 +88,11 @@ void	Game::render()
 	player.show_bullets();
 	enemies.drawSwarm();
 	box(stdscr, 0, 0);
+	for (int i = 1; i < fieldWidth - 2; i++)
+	{
+		move(fieldHeight - 10, i);
+		addch('#');
+	}
 	refresh();
 }
 
@@ -100,6 +105,7 @@ void	Game::mainloop()
 		update();
 		render();
 	}
+	nodelay(stdscr,false); 
 	if (flagEndStatus == true)
 	{
 		move(fieldHeight / 2 - 4, fieldWidth / 2);
@@ -133,7 +139,7 @@ void	Game::mv_right(Symbol &p_symb)
 
 void	Game::mv_down(Symbol &p_symb)
 {
-	if (p_symb.getYpos() < (fieldHeight - 1))
+	if (p_symb.getYpos() < (screenHeight - 1))
 		p_symb.updYpos(1);
 }
 

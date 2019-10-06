@@ -1,7 +1,7 @@
 #ifndef GAME_HPP
 # define GAME_HPP
 
-# include <curses.h>
+# include <ncurses.h>
 # include "Symbol.hpp"
 # include "Player.hpp"
 # include "Bullet.hpp"
@@ -9,6 +9,7 @@
 # include "Swarm.hpp"
 # define ESC_KEY 27
 # define SPACE_KEY 32
+
 class Game
 {
 private:
@@ -16,6 +17,7 @@ private:
 	Swarm	enemies;
 	int		fieldWidth;
 	int		fieldHeight;
+	int		screenHeight;
 	bool	flagRunning;
 	bool	flagEndStatus;
 	bool	flagLeft;
