@@ -10,6 +10,8 @@ public:
 	Player(/* args */);
 	Player(char p_symb, int p_x, int p_y);
 	~Player();
+
+
 };
 
 

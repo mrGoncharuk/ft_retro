@@ -8,8 +8,8 @@ Game::Game(): player('T', 3, 3), flagRunning(true), flagShoot(false), flagLeft(f
 	keypad(stdscr,true);                    //init the keyboard
 	noecho();                                                                       //don't write
 	curs_set(0);                                                    //cursor invisible
-	getmaxyx(stdscr,fieldHeight,fieldWidth);
-	
+	getmaxyx(stdscr,fieldHeight, fieldWidth);
+
 }
 
 void	Game::events()
@@ -45,18 +45,13 @@ void	Game::update()
 	{
 		flagRight = false;
 		mv_right(player);
-		// player.show_symb();
-		// move(player.getXpos(), player.getYpos());
-		// addch('T');
-		// refresh();
 	}
 }
 
 void	Game::render()
 {
 	erase();
-	move(player.getXpos(), player.getYpos());
-	addch('T');
+	player.show_symb();
 	refresh();
 	// refresh();
 	// erase();
