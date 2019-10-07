@@ -1,4 +1,7 @@
-#pragma once
+#ifndef STAT_HPP
+# define STAT_HPP
+
+
 #include <ncurses.h>
 
 class Stat {
@@ -6,7 +9,7 @@ class Stat {
         Stat(void);
         ~Stat(void);
         Stat(const Stat & src);
-	    // Stat &operator=(Stat const & rhs);
+        Stat &operator=(Stat const & rhs);
         
         void setLvl(unsigned int lvl);
         void setTime(unsigned int time);
@@ -15,18 +18,24 @@ class Stat {
         
         void lvlUpgrade( void );
         void loseHP( void );
-        
-        void printInfo( int fieldWidth, int fieldHeight );
+        void updateTime(unsigned int currentTimestamp);
 
-        unsigned int getLvl(void);
-        unsigned int getTime(void);
-        unsigned int getScore(void);
-        unsigned int getHP(void);
+        void printInfo( int fieldWidth, int fieldHeight );
+        void updateScore(unsigned int score);
+
+        unsigned int getLvl(void) const;
+        unsigned int getTime(void) const;
+        unsigned int getScore(void) const;
+        unsigned int getHP(void) const;
     
     private:
         unsigned int _lvl;
-        unsigned int _time;
+        unsigned long long _time;
         unsigned int _score;
         unsigned int _hp;
+        unsigned int _timestamp;
+
 
 };
+
+#endif

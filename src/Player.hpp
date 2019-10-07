@@ -19,8 +19,11 @@ public:
 	void	send_bullet();
 	Bullet	**getBullets();
 	int		getMaxBullets();
+	int		getHP() const;
+	void		setHP(int);
 	void	show_bullets();
 	void	show_player();
+
 };
 
 #endif

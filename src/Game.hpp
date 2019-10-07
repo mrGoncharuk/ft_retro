@@ -15,7 +15,7 @@ class Game
 {
 private:
 	Player	player;
-	Swarm	enemies;
+	Swarm	*enemies;
 	Stat    stat;
 	int		fieldWidth;
 	int		fieldHeight;
@@ -25,6 +25,7 @@ private:
 	bool	flagLeft;
 	bool	flagRight;
 	bool	flagShoot;
+	bool	flagNewLevel;
 public:
     Game(/* args */);
 

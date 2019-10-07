@@ -1,14 +1,15 @@
 #include "Game.hpp"
 
-Game::Game(): player('T', 40, 27), fieldHeight(40), fieldWidth(80), enemies(20, 77, 1500, 300), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false), flagEndStatus(true)
+Game::Game(): player('T', 40, 27), fieldHeight(40), fieldWidth(50), flagRunning(true), flagShoot(false), flagLeft(false), flagRight(false), flagEndStatus(true), flagNewLevel(false)
 {
 	initscr();
 	nodelay(stdscr,true);                   //if there wasn't any key pressed don't wait for keypress
 	keypad(stdscr,true);                    //init the keyboard
 	noecho();                                                                       //don't write
 	curs_set(0);                                                    //cursor invisible
-	resizeterm(fieldHeight - 1, fieldWidth - 1);
+	resizeterm(fieldHeight, fieldWidth);
 	screenHeight = fieldHeight - 10;
+	enemies = new Swarm(5, fieldWidth - 3, 2000, 400);
 }
 
 void	Game::events()
@@ -48,8 +49,8 @@ void	Game::update()
 		flagShoot = false;
 		player.send_bullet();
 	}
-	enemies.spawnMob();
-	enemies.moveSwarm();
+	enemies->spawnMob();
+	enemies->moveSwarm();
 	Bullet **bullets = player.getBullets();
 	for (int i = 0; i < player.getMaxBullets(); i++)
 		if (bullets[i])
@@ -63,19 +64,25 @@ void	Game::update()
 				if (bullets[i]->isReadyForUpdate())
 					bullets[i]->fly();
 		}
-	enemies.isMobDied(bullets, player.getMaxBullets());
-	if (enemies.isPlayerKilled(player.getXpos(), player.getYpos(), screenHeight))
+	if (enemies->isMobDied(bullets, player.getMaxBullets()))
+	{
+		stat.updateScore(100);
+	}
+	if (enemies->isPlayerKilled(player.getXpos(), player.getYpos(), screenHeight))
 	{
 		if (stat.getHP() == 0) {
 			flagRunning = false;
-			flagEndStatus = false;
 		}
 		else 
+		{
 			stat.loseHP();
+			player.setHP(stat.getHP());
+		}
 	}
-	if (enemies.isSwarmLost())
+	if (enemies->isSwarmLost())
 	{
 		stat.lvlUpgrade();
+		flagNewLevel = true;
 	}
 }
 
@@ -86,7 +93,7 @@ void	Game::render()
 	erase();
 	player.show_player();
 	player.show_bullets();
-	enemies.drawSwarm();
+	enemies->drawSwarm();
 	box(stdscr, 0, 0);
 
 	stat.printInfo(fieldWidth, fieldHeight);
@@ -102,18 +109,27 @@ void	Game::mainloop()
 		events();
 		update();
 		render();
+		if (flagNewLevel)
+		{
+			nodelay(stdscr,false);
+			flagNewLevel = false;
+			int prev_enem = enemies->getSize();
+			int prev_spawn_speed = enemies->getSpawnSpeed();
+			int prev_speed = enemies->getMobSpeed();
+			delete enemies;
+			enemies = new Swarm(prev_enem + 3, fieldWidth - 3, prev_spawn_speed - 100, prev_speed - 20);
+			move(fieldHeight / 2 - 4, 5);
+			printw("Congratulations!!! LEVEL UP!!!");
+			this->player.setHP(this->player.getHP() + 1);
+			stat.setHP(player.getHP());
+			getch();
+			nodelay(stdscr,true);
+		}
 	}
 	nodelay(stdscr,false); 
-	if (flagEndStatus == true)
-	{
-		move(fieldHeight / 2 - 4, fieldWidth / 2);
-		printw("You win!!!");
-	}
-	else
-	{
-		move(fieldHeight / 2 - 4, fieldWidth / 2);
-		printw("You lose!!!");
-	}
+
+	move(fieldHeight / 2 - 4, 5);
+	printw("You lose!!! Your score = %d", stat.getScore());
 	getch();
 }
 

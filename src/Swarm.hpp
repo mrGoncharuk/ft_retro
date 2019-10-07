@@ -24,12 +24,16 @@ public:
 	
 	void	spawnMob();
 	void	moveSwarm();
-	void	isMobDied(Bullet **bullets, int bulletsAmount);
+	bool	isMobDied(Bullet **bullets, int bulletsAmount);
 	bool	isPlayerKilled(int playerX, int playerY, int fieldHeight);
 	bool	isSwarmLost();
 	void	drawSwarm();
 	void	moveMobBullet();
+	int		getSize() const;
+	int		getSpawnSpeed() const;
+	int		getMobSpeed() const;
 };
+
 
 #endif
 

@@ -26,6 +26,22 @@ Swarm::~Swarm()
 		delete bullet;
 }
 
+Swarm::Swarm(Swarm const &cpy)
+{
+	*this = cpy;
+}
+Swarm	&Swarm::operator=(Swarm const & cpy)
+{
+	this->size = cpy.size;
+	this->died = cpy.died;
+	this->spawnedAmount = cpy.spawnedAmount;
+	this->spawnSpeed = cpy.spawnSpeed;
+	this->mobSpeed = cpy.mobSpeed;
+	this->arr = cpy.arr;
+	this->bullet = cpy.bullet;
+	return (*this);
+}
+
 
 void	Swarm::spawnMob()
 {
@@ -36,11 +52,16 @@ void	Swarm::spawnMob()
 		if (spawnedAmount % 5 == 4)
 		{
 			if (bullet == NULL)
-				bullet = new Bullet('V', arr[spawnedAmount - 1]->getXpos(), arr[spawnedAmount - 1]->getYpos() + 1, 1, 150);
+				bullet = new Bullet('|', arr[spawnedAmount - 1]->getXpos(), arr[spawnedAmount - 1]->getYpos() + 1, 1, 150);
 		}
 	}
 }
 
+
+
+int		Swarm::getSize() const { return (size); }
+int		Swarm::getSpawnSpeed() const { return (spawnSpeed); }
+int		Swarm::getMobSpeed() const { return (mobSpeed); }
 
 void	Swarm::moveSwarm()
 {
@@ -67,7 +88,7 @@ void	Swarm::drawSwarm()
 		bullet->show_symb();
 }
 
-void	Swarm::isMobDied(Bullet **bullets, int bulletsAmount)
+bool	Swarm::isMobDied(Bullet **bullets, int bulletsAmount)
 {
 	for (int i = 0; i < bulletsAmount; i++)
 	{
@@ -83,34 +104,27 @@ void	Swarm::isMobDied(Bullet **bullets, int bulletsAmount)
 						arr[j] = NULL;
 						bullets[i] = NULL;
 						died++;
-						break ;
+						return (true);
 					}
 			}
 		}
 	}
+	return (false);
 }
 
 bool	Swarm::isPlayerKilled(int playerX, int playerY, int fieldHeight)
 {
 	int		i = 0;
 
-
-	if (bullet != NULL)
-	{
-		if (((bullet->getYpos()) >= playerY) && ((playerX - 2) >= bullet->getXpos() || (playerX - 2) <= bullet->getXpos()))
-			return (true);
-		if (bullet->getYpos() == fieldHeight)
-		{
-			delete bullet;
-			bullet = NULL;
-		}
-	}
 	while (i < size)
 	{
 		if (arr[i] != NULL)
 		{
-			if ((playerY - arr[i]->getYpos()) <= 0 && ((playerX - 2) >= arr[i]->getXpos() && (playerX - 2) < arr[i]->getXpos()))
+			if (((arr[i]->getYpos()) == playerY || (arr[i]->getYpos() == playerY + 1)) && ((arr[i]->getXpos() >= (playerX - 2)) || (arr[i]->getXpos() <= (playerX + 2))))
 			{
+				delete arr[i];
+				arr[i] = NULL;
+				died++;
 				return (true);
 			}
 			else
@@ -124,10 +138,31 @@ bool	Swarm::isPlayerKilled(int playerX, int playerY, int fieldHeight)
 	{
 		if (arr[i] != NULL)
 		{
-			if (arr[i]->getYpos() == (fieldHeight - 2))
+			if (arr[i]->getYpos() == (fieldHeight - 1))
+			{
+				delete arr[i];
+				arr[i] = NULL;
+				died++;
 				return (true);
+			}
 		}
 		i++;
+	}
+
+	if (bullet != NULL)
+	{
+		if (((bullet->getYpos()) == playerY || (bullet->getYpos() == playerY + 1)) && ((bullet->getXpos() >= (playerX - 2)) && (bullet->getXpos() <= (playerX + 2))))
+		{
+			delete bullet;
+			bullet = NULL;
+			return (true);
+		}
+		if (bullet->getYpos() > fieldHeight - 2)
+		{
+			delete bullet;
+			bullet = NULL;
+			return (false);
+		}
 	}
 	return (false);
 }

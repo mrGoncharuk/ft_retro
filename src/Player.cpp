@@ -69,3 +69,7 @@ void	Player::show_bullets()
 			bullets[i]->show_symb();
 	}
 }
+
+int		Player::getHP() const { return (hp);}
+void	Player::setHP(int hp) { this->hp = hp; }
+
