@@ -138,7 +138,7 @@ bool	Swarm::isPlayerKilled(int playerX, int playerY, int fieldHeight)
 	{
 		if (arr[i] != NULL)
 		{
-			if (arr[i]->getYpos() == (fieldHeight - 1))
+			if (arr[i]->getYpos() == (fieldHeight + 1))
 			{
 				delete arr[i];
 				arr[i] = NULL;

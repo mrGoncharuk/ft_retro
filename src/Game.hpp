@@ -2,6 +2,7 @@
 # define GAME_HPP
 
 # include <ncurses.h>
+# include <unistd.h>
 # include "Symbol.hpp"
 # include "Player.hpp"
 # include "Bullet.hpp"
