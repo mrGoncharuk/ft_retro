@@ -109,7 +109,7 @@ void	Game::mainloop()
 		events();
 		update();
 		render();
-		if (flagNewLevel && !flagRunning)
+		if (flagNewLevel)
 		{
 			nodelay(stdscr,false);
 			flagNewLevel = false;
@@ -130,7 +130,9 @@ void	Game::mainloop()
 
 	move(fieldHeight / 2 - 4, 5);
 	printw("End of game!!! Your score = %d", stat.getScore());
-	usleep(5000);
+	refresh();
+	usleep(2000000);
+	refresh();
 	getch();
 }
 

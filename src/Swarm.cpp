@@ -120,7 +120,7 @@ bool	Swarm::isPlayerKilled(int playerX, int playerY, int fieldHeight)
 	{
 		if (arr[i] != NULL)
 		{
-			if (((arr[i]->getYpos()) == playerY || (arr[i]->getYpos() == playerY + 1)) && ((arr[i]->getXpos() >= (playerX - 2)) || (arr[i]->getXpos() <= (playerX + 2))))
+			if (((arr[i]->getYpos()) == playerY || (arr[i]->getYpos() == playerY + 1)) && ((arr[i]->getXpos() >= (playerX - 2)) && (arr[i]->getXpos() <= (playerX + 2))))
 			{
 				delete arr[i];
 				arr[i] = NULL;
@@ -138,7 +138,7 @@ bool	Swarm::isPlayerKilled(int playerX, int playerY, int fieldHeight)
 	{
 		if (arr[i] != NULL)
 		{
-			if (arr[i]->getYpos() == (fieldHeight + 1))
+			if (arr[i]->getYpos() == (fieldHeight))
 			{
 				delete arr[i];
 				arr[i] = NULL;
